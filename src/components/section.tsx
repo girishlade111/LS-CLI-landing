@@ -38,15 +38,15 @@ export function SectionHeader({
   return (
     <div className={cn("mb-12 max-w-2xl md:mb-16", className)}>
       {label && (
-        <span className="mb-3 inline-block rounded bg-accent/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-accent">
+        <span className="mb-3 inline-block rounded-md border border-border bg-surfaceAlt px-3 py-1 text-xs font-semibold uppercase tracking-wider text-textSecondary">
           {label}
         </span>
       )}
-      <h2 className="text-3xl font-bold tracking-tight text-text-primary md:text-4xl">
+      <h2 className="text-3xl font-bold tracking-tight text-textPrimary md:text-4xl">
         {title}
       </h2>
       {description && (
-        <p className="mt-4 text-lg leading-relaxed text-text-muted">
+        <p className="mt-4 text-lg leading-relaxed text-textMuted">
           {description}
         </p>
       )}

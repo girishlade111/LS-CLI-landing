@@ -9,36 +9,140 @@
     format("woff2");
 }
 
+/*
+ * Theme System — Semantic Token Architecture
+ *
+ * 1. Raw RGB values live in :root / .dark as space-separated triples.
+ * 2. @theme inline maps Tailwind utility names → rgb(var(--token) / <alpha>).
+ * 3. Components use ONLY the Tailwind utilities (bg-background, text-textPrimary, …).
+ * 4. Dark mode swaps :root values via the .dark class on <html>.
+ */
+
+/* ── Light theme tokens ── */
+:root {
+  --background: 249 250 251;
+  --surface: 255 255 255;
+  --surface-alt: 243 244 246;
+  --border: 229 231 235;
+
+  --text-primary: 17 24 39;
+  --text-secondary: 75 85 99;
+  --text-muted: 107 114 128;
+
+  --accent-primary: 132 204 22;
+  --accent-secondary: 22 163 74;
+
+  --shadow-color: 0 0 0;
+
+  /* Non-utility custom properties */
+  --shadow-base: rgba(0, 0, 0, 0.06);
+  --shadow-lg: rgba(0, 0, 0, 0.1);
+  --highlight-bg: rgba(132, 204, 22, 0.12);
+  --card-hover-border: rgba(132, 204, 22, 0.3);
+  --card-hover-shadow: rgba(132, 204, 22, 0.08);
+  --selection-bg: rgba(132, 204, 22, 0.2);
+  --scrollbar-color: #D1D5DB;
+
+  /* Terminal (always dark) */
+  --terminal-bg: 30 30 46;
+  --terminal-text: 255 255 255;
+  --terminal-green: 40 200 64;
+  --terminal-muted: 255 255 255;
+}
+
+/* ── Dark theme tokens ── */
+.dark {
+  --background: 11 11 12;
+  --surface: 17 17 17;
+  --surface-alt: 26 26 26;
+  --border: 38 38 38;
+
+  --text-primary: 245 245 245;
+  --text-secondary: 163 163 163;
+  --text-muted: 115 115 115;
+
+  --accent-primary: 255 255 255;
+  --accent-secondary: 156 163 175;
+
+  --shadow-color: 0 0 0;
+
+  --shadow-base: rgba(0, 0, 0, 0.4);
+  --shadow-lg: rgba(0, 0, 0, 0.6);
+  --highlight-bg: rgba(255, 255, 255, 0.04);
+  --card-hover-border: rgba(255, 255, 255, 0.12);
+  --card-hover-shadow: rgba(255, 255, 255, 0.03);
+  --selection-bg: rgba(255, 255, 255, 0.15);
+  --scrollbar-color: #333333;
+
+  --terminal-bg: 10 10 10;
+}
+
+/* ── Tailwind v4 theme mapping ── */
 @theme inline {
-  --color-background: #0B0F19;
-  --color-surface: #111827;
-  --color-accent: #3B82F6;
-  --color-accent-secondary: #6366F1;
-  --color-success: #10B981;
-  --color-text-primary: #E5E7EB;
-  --color-text-muted: #9CA3AF;
-  --color-border-subtle: #1F2937;
+  --color-background: rgb(var(--background));
+  --color-surface: rgb(var(--surface));
+  --color-surfaceAlt: rgb(var(--surface-alt));
+  --color-border: rgb(var(--border));
+
+  --color-textPrimary: rgb(var(--text-primary));
+  --color-textSecondary: rgb(var(--text-secondary));
+  --color-textMuted: rgb(var(--text-muted));
+
+  --color-accentPrimary: rgb(var(--accent-primary));
+  --color-accentSecondary: rgb(var(--accent-secondary));
+
+  --color-terminalBg: rgb(var(--terminal-bg));
+
+  /* Fonts */
   --font-sans: var(--font-geist-sans);
   --font-mono: "JetBrains Mono", var(--font-geist-mono);
 }
 
+/* ── Global styles ── */
 * {
   scrollbar-width: thin;
-  scrollbar-color: #1F2937 transparent;
+  scrollbar-color: var(--scrollbar-color) transparent;
 }
 
 body {
-  background: var(--color-background);
-  color: var(--color-text-primary);
+  background: rgb(var(--background));
+  color: rgb(var(--text-primary));
   font-family: var(--font-sans), system-ui, sans-serif;
 }
 
 ::selection {
-  background: rgba(59, 130, 246, 0.3);
-  color: #E5E7EB;
+  background: var(--selection-bg);
+  color: rgb(var(--text-primary));
 }
 
 code,
 pre {
   font-family: var(--font-mono), monospace;
+}
+
+/* ── Smooth theme transition ── */
+html {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body,
+header,
+footer,
+main,
+section,
+nav,
+div,
+a,
+button,
+span,
+input,
+select,
+textarea {
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.15s ease, box-shadow 0.2s ease;
+}
+
+/* Opt-out for animated components */
+[data-no-transition],
+[data-no-transition] * {
+  transition: none !important;
 }

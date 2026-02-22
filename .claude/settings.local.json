@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx next:*)",
+      "Bash(del:*)",
+      "Bash(npm run build:*)"
+    ]
+  }
+}

@@ -1,14 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import {
-  Shield,
-  Server,
-  Clock,
-  Terminal,
-  Eye,
-  Database,
-} from "lucide-react";
+import { Shield, Server, Clock, Terminal, Eye, Database } from "lucide-react";
 import { PageHeader } from "@/components/page-header";
 import { Section, SectionHeader } from "@/components/section";
 
@@ -29,7 +22,7 @@ const principles = [
     icon: Clock,
     title: "Long-Term Independence",
     description:
-      "Token-based pricing models are designed to scale with your success — against your budget. As your team grows and your usage increases, costs become unpredictable. Fixed GPU infrastructure costs are transparent, plannable, and decrease per-request as utilization increases.",
+      "Token-based pricing models are designed to scale with your success — against your budget. As your team grows and usage increases, costs become unpredictable. Fixed GPU infrastructure costs are transparent, plannable, and decrease per-request as utilization increases.",
   },
   {
     icon: Terminal,
@@ -63,14 +56,14 @@ export default function AboutPage() {
         description="Lade Stack exists because developers deserve AI tools that respect their infrastructure, their data, and their autonomy."
       />
 
-      <Section>
+      <Section id="vision">
         <SectionHeader
           label="Vision"
           title="The Case for Sovereign AI"
           description="The current generation of AI developer tools requires sending proprietary code to third-party APIs with opaque data handling, unpredictable pricing, and zero infrastructure control. This is fundamentally incompatible with how serious engineering organizations operate."
         />
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-5 md:grid-cols-2">
           {principles.map((principle, i) => (
             <motion.div
               key={principle.title}
@@ -78,13 +71,20 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="rounded border border-border-subtle bg-surface p-6"
+              whileHover={{
+                y: -3,
+                boxShadow: "0 8px 24px var(--card-hover-shadow)",
+                transition: { duration: 0.2 },
+              }}
+              className="group rounded-lg border border-border bg-surface p-6 transition-colors hover:border-[var(--card-hover-border)]"
             >
-              <principle.icon className="mb-4 h-5 w-5 text-accent" />
-              <h3 className="mb-3 text-lg font-semibold text-text-primary">
+              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-md bg-surfaceAlt transition-colors group-hover:bg-[var(--highlight-bg)]">
+                <principle.icon className="h-5 w-5 text-textSecondary transition-colors group-hover:text-textPrimary" />
+              </div>
+              <h3 className="mb-3 text-lg font-semibold text-textPrimary">
                 {principle.title}
               </h3>
-              <p className="text-sm leading-relaxed text-text-muted">
+              <p className="text-sm leading-relaxed text-textMuted">
                 {principle.description}
               </p>
             </motion.div>
@@ -92,14 +92,14 @@ export default function AboutPage() {
         </div>
       </Section>
 
-      <Section className="border-t border-border-subtle bg-surface/50">
+      <Section id="principles" className="border-t border-border bg-surfaceAlt/50">
         <SectionHeader
           label="Principles"
           title="What We Stand For"
           description="These principles guide every technical and product decision we make."
         />
 
-        <div className="grid gap-6 md:grid-cols-2">
+        <div className="grid gap-5 md:grid-cols-2">
           {values.map((value, i) => (
             <motion.div
               key={value.title}
@@ -107,13 +107,20 @@ export default function AboutPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="rounded border border-border-subtle bg-background p-6"
+              whileHover={{
+                y: -2,
+                boxShadow: "0 8px 24px var(--card-hover-shadow)",
+                transition: { duration: 0.2 },
+              }}
+              className="rounded-lg border border-border bg-background p-6 transition-colors hover:border-[var(--card-hover-border)]"
             >
-              <value.icon className="mb-4 h-5 w-5 text-success" />
-              <h3 className="mb-2 text-lg font-semibold text-text-primary">
+              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-md bg-surfaceAlt">
+                <value.icon className="h-5 w-5 text-textSecondary" />
+              </div>
+              <h3 className="mb-2 text-lg font-semibold text-textPrimary">
                 {value.title}
               </h3>
-              <p className="text-sm leading-relaxed text-text-muted">
+              <p className="text-sm leading-relaxed text-textMuted">
                 {value.description}
               </p>
             </motion.div>
@@ -128,15 +135,15 @@ export default function AboutPage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="mb-6 text-2xl font-bold text-text-primary">
+            <h2 className="mb-6 text-2xl font-bold text-textPrimary">
               The Technical Bet
             </h2>
-            <div className="space-y-4 text-sm leading-relaxed text-text-muted">
+            <div className="space-y-4 text-sm leading-relaxed text-textMuted">
               <p>
                 Open-source large language models are improving at an
                 unprecedented rate. Models like Qwen, DeepSeek, and GLM are
-                closing the gap with proprietary alternatives on coding benchmarks,
-                reasoning tasks, and real-world developer workflows.
+                closing the gap with proprietary alternatives on coding
+                benchmarks, reasoning tasks, and real-world developer workflows.
               </p>
               <p>
                 The cost of GPU compute continues to decrease while model
@@ -145,36 +152,36 @@ export default function AboutPage() {
                 self-hosted AI are becoming increasingly favorable.
               </p>
               <p>
-                Lade Stack is built on the conviction that within the next cycle of
-                model development, self-hosted open-source models will match or
-                exceed proprietary API performance for the majority of developer
-                use cases — at a fraction of the cost and with complete data
-                sovereignty.
+                Lade Stack is built on the conviction that within the next cycle
+                of model development, self-hosted open-source models will match
+                or exceed proprietary API performance for the majority of
+                developer use cases — at a fraction of the cost and with
+                complete data sovereignty.
               </p>
               <p>
-                We are building the infrastructure layer that makes this transition
-                seamless, practical, and production-ready.
+                We are building the infrastructure layer that makes this
+                transition seamless, practical, and production-ready.
               </p>
             </div>
           </motion.div>
         </div>
       </Section>
 
-      <Section className="border-t border-border-subtle">
-        <div className="rounded border border-border-subtle bg-surface p-10 text-center md:p-14">
+      <Section className="border-t border-border">
+        <div className="rounded-lg border border-border bg-surface p-10 text-center md:p-14">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-2xl font-bold text-text-primary md:text-3xl">
+            <h2 className="text-2xl font-bold text-textPrimary md:text-3xl">
               Join the Movement
             </h2>
-            <p className="mx-auto mt-3 max-w-lg text-text-muted">
+            <p className="mx-auto mt-3 max-w-lg text-textMuted">
               Lade Stack is for developers who believe AI infrastructure should
               be owned, not rented. The CLI is launching soon.
             </p>
-            <span className="mt-6 inline-flex items-center rounded border border-accent/30 bg-accent/10 px-6 py-3 text-sm font-semibold text-accent">
+            <span className="mt-6 inline-flex items-center rounded-md bg-textPrimary px-6 py-3 text-sm font-semibold text-background">
               Launching Soon
             </span>
           </motion.div>

@@ -17,11 +17,11 @@ import { Section, SectionHeader } from "@/components/section";
 
 function CodeBlock({ title, children }: { title: string; children: string }) {
   return (
-    <div className="overflow-hidden rounded border border-border-subtle">
-      <div className="border-b border-border-subtle bg-surface px-4 py-2.5">
-        <span className="font-mono text-xs text-text-muted">{title}</span>
+    <div className="overflow-hidden rounded-lg border border-border">
+      <div className="border-b border-border bg-surfaceAlt px-4 py-2.5">
+        <span className="font-mono text-xs text-textMuted">{title}</span>
       </div>
-      <pre className="overflow-x-auto bg-[#0a0e17] p-4 font-mono text-sm leading-6 text-text-muted">
+      <pre className="overflow-x-auto bg-terminalBg p-4 font-mono text-sm leading-6" style={{ color: "rgba(255,255,255,0.6)" }}>
         <code>{children}</code>
       </pre>
     </div>
@@ -33,21 +33,23 @@ function ArchSection({
   title,
   description,
   children,
+  id,
 }: {
   icon: React.ElementType;
   title: string;
   description: string;
   children: React.ReactNode;
+  id?: string;
 }) {
   return (
-    <Section className="border-t border-border-subtle">
+    <Section id={id} className="border-t border-border">
       <div className="grid gap-10 lg:grid-cols-2">
         <div>
-          <div className="mb-4 flex h-10 w-10 items-center justify-center rounded bg-accent/10">
-            <Icon className="h-5 w-5 text-accent" />
+          <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-md bg-surfaceAlt">
+            <Icon className="h-5 w-5 text-textSecondary" />
           </div>
-          <h2 className="text-2xl font-bold text-text-primary">{title}</h2>
-          <p className="mt-3 leading-relaxed text-text-muted">{description}</p>
+          <h2 className="text-2xl font-bold text-textPrimary">{title}</h2>
+          <p className="mt-3 leading-relaxed text-textMuted">{description}</p>
         </div>
         <div>{children}</div>
       </div>
@@ -71,27 +73,43 @@ export default function ArchitecturePage() {
           title="High-Level System Design"
           description="The system is composed of four primary layers: CLI interface, routing engine, model serving, and GPU infrastructure."
         />
-        <div className="grid gap-3 md:grid-cols-4">
+        <div className="grid gap-4 md:grid-cols-4">
           {[
             {
               label: "CLI Layer",
-              items: ["Command Parser", "Context Loader", "Config Manager", "Output Formatter"],
-              color: "#3B82F6",
+              items: [
+                "Command Parser",
+                "Context Loader",
+                "Config Manager",
+                "Output Formatter",
+              ],
             },
             {
               label: "Routing Layer",
-              items: ["Task Classifier", "Model Selector", "Cost Optimizer", "Fallback Handler"],
-              color: "#6366F1",
+              items: [
+                "Task Classifier",
+                "Model Selector",
+                "Cost Optimizer",
+                "Fallback Handler",
+              ],
             },
             {
               label: "Serving Layer",
-              items: ["vLLM Runtime", "Batch Scheduler", "KV Cache Manager", "Token Streamer"],
-              color: "#8B5CF6",
+              items: [
+                "vLLM Runtime",
+                "Batch Scheduler",
+                "KV Cache Manager",
+                "Token Streamer",
+              ],
             },
             {
               label: "Infrastructure",
-              items: ["GPU Pool Manager", "Auto Scaler", "Health Monitor", "Model Registry"],
-              color: "#10B981",
+              items: [
+                "GPU Pool Manager",
+                "Auto Scaler",
+                "Health Monitor",
+                "Model Registry",
+              ],
             },
           ].map((layer, i) => (
             <motion.div
@@ -100,24 +118,23 @@ export default function ArchitecturePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="rounded border border-border-subtle bg-surface p-5"
+              whileHover={{
+                y: -2,
+                boxShadow: "0 8px 24px var(--card-hover-shadow)",
+                transition: { duration: 0.2 },
+              }}
+              className="rounded-lg border border-border bg-surface p-5 transition-colors hover:border-[var(--card-hover-border)]"
             >
-              <h3
-                className="mb-3 text-sm font-bold uppercase tracking-wider"
-                style={{ color: layer.color }}
-              >
+              <h3 className="mb-3 text-sm font-bold uppercase tracking-wider text-textSecondary">
                 {layer.label}
               </h3>
               <ul className="space-y-2">
                 {layer.items.map((item) => (
                   <li
                     key={item}
-                    className="flex items-center gap-2 text-sm text-text-muted"
+                    className="flex items-center gap-2 text-sm text-textMuted"
                   >
-                    <span
-                      className="h-1.5 w-1.5 rounded-full"
-                      style={{ backgroundColor: layer.color + "60" }}
-                    />
+                    <span className="h-1.5 w-1.5 rounded-full bg-border" />
                     {item}
                   </li>
                 ))}
@@ -126,10 +143,10 @@ export default function ArchitecturePage() {
           ))}
         </div>
 
-        <div className="mt-6 flex items-center justify-center gap-2 text-text-muted">
+        <div className="mt-6 flex items-center justify-center gap-2 text-textMuted">
           {["CLI", "Router", "Serving", "GPU"].map((label, i) => (
             <span key={label} className="flex items-center gap-2">
-              <span className="rounded bg-surface px-3 py-1 font-mono text-xs">
+              <span className="rounded-md border border-border bg-surfaceAlt px-3 py-1 font-mono text-xs text-textSecondary">
                 {label}
               </span>
               {i < 3 && <ArrowRight className="h-3 w-3" />}
@@ -140,12 +157,13 @@ export default function ArchitecturePage() {
 
       {/* Model Routing Layer */}
       <ArchSection
+        id="routing"
         icon={Network}
         title="Model Routing Layer"
         description="The routing engine classifies incoming tasks and selects the optimal model based on task type, context length, latency requirements, and cost constraints. Routing decisions are transparent and logged for debugging."
       >
         <CodeBlock title="routing-config.yaml">
-{`routing:
+          {`routing:
   strategy: "task-optimized"
   rules:
     - task: code_generation
@@ -171,12 +189,13 @@ export default function ArchitecturePage() {
 
       {/* GPU Serving Layer */}
       <ArchSection
+        id="serving"
         icon={Cpu}
         title="GPU Serving Layer"
         description="Models are served through vLLM or TensorRT-LLM for maximum throughput. Continuous batching, PagedAttention, and speculative decoding minimize latency and maximize GPU utilization."
       >
         <CodeBlock title="serving-config.yaml">
-{`serving:
+          {`serving:
   engine: vllm
   config:
     tensor_parallel_size: 2
@@ -200,12 +219,13 @@ export default function ArchitecturePage() {
 
       {/* Auto Scaling */}
       <ArchSection
+        id="scaling"
         icon={TrendingUp}
         title="Auto Scaling Strategy"
         description="The auto scaler monitors request queue depth, GPU utilization, and latency percentiles to make scaling decisions. Scale-up is aggressive to minimize wait times. Scale-down uses a cooldown period to prevent thrashing."
       >
         <CodeBlock title="autoscaler-policy.yaml">
-{`autoscaling:
+          {`autoscaling:
   min_replicas: 1
   max_replicas: 8
   metrics:
@@ -232,7 +252,7 @@ export default function ArchitecturePage() {
       <ArchSection
         icon={Layers}
         title="Quantization Strategy"
-        description="Models are quantized to reduce memory footprint and improve throughput without significant quality loss. AWQ 4-bit quantization is the default for coding models, while 8-bit GPTQ is used for reasoning models where precision matters more."
+        description="Models are quantized to reduce memory footprint and improve throughput without significant quality loss. AWQ 4-bit is the default for coding models. 8-bit GPTQ is used for reasoning models where precision matters more."
       >
         <div className="space-y-4">
           {[
@@ -257,16 +277,17 @@ export default function ArchitecturePage() {
           ].map((q) => (
             <div
               key={q.method}
-              className="rounded border border-border-subtle bg-[#0a0e17] p-4"
+              className="rounded-lg border border-border bg-surfaceAlt p-4"
             >
               <div className="mb-2 flex items-center justify-between">
-                <span className="font-mono text-sm font-semibold text-accent">
+                <span className="font-mono text-sm font-semibold text-textPrimary">
                   {q.method}
                 </span>
-                <span className="text-xs text-text-muted">{q.memory}</span>
+                <span className="text-xs text-textMuted">{q.memory}</span>
               </div>
-              <p className="text-sm text-text-muted">
-                <span className="text-text-primary">{q.use}</span> — {q.quality}
+              <p className="text-sm text-textMuted">
+                <span className="text-textSecondary">{q.use}</span> —{" "}
+                {q.quality}
               </p>
             </div>
           ))}
@@ -280,7 +301,7 @@ export default function ArchitecturePage() {
         description="The model pool maintains warm instances of frequently used models and cold-starts less common ones on demand. Models share GPU memory through intelligent scheduling and preemption policies."
       >
         <CodeBlock title="model-pool.yaml">
-{`pool:
+          {`pool:
   warm_models:
     - qwen-coder-32b    # Always loaded
     - deepseek-r1       # Always loaded
@@ -311,33 +332,38 @@ export default function ArchitecturePage() {
           {[
             {
               technique: "Continuous Batching",
-              detail: "New requests are added to running batches without waiting for batch completion",
+              detail:
+                "New requests are added to running batches without waiting for batch completion",
             },
             {
               technique: "PagedAttention",
-              detail: "KV cache is managed in pages, eliminating memory fragmentation and enabling larger batch sizes",
+              detail:
+                "KV cache is managed in pages, eliminating memory fragmentation and enabling larger batch sizes",
             },
             {
               technique: "Speculative Decoding",
-              detail: "Small draft model generates candidates that the main model verifies in parallel",
+              detail:
+                "Small draft model generates candidates that the main model verifies in parallel",
             },
             {
               technique: "Prefix Caching",
-              detail: "Common system prompts and workspace context are cached across requests",
+              detail:
+                "Common system prompts and workspace context are cached across requests",
             },
             {
               technique: "Chunked Prefill",
-              detail: "Long prompts are processed in chunks to interleave with decode steps from other requests",
+              detail:
+                "Long prompts are processed in chunks to interleave with decode steps from other requests",
             },
           ].map((item) => (
             <div
               key={item.technique}
-              className="rounded border border-border-subtle bg-[#0a0e17] p-4"
+              className="rounded-lg border border-border bg-surfaceAlt p-4"
             >
-              <h4 className="mb-1 font-mono text-sm font-semibold text-success">
+              <h4 className="mb-1 font-mono text-sm font-semibold text-textPrimary">
                 {item.technique}
               </h4>
-              <p className="text-sm text-text-muted">{item.detail}</p>
+              <p className="text-sm text-textMuted">{item.detail}</p>
             </div>
           ))}
         </div>
@@ -353,42 +379,46 @@ export default function ArchitecturePage() {
           {[
             {
               strategy: "Spot Instance Integration",
-              detail: "Non-critical workloads run on spot/preemptible instances with automatic failover to on-demand",
+              detail:
+                "Non-critical workloads run on spot/preemptible instances with automatic failover to on-demand",
             },
             {
               strategy: "Right-Sizing",
-              detail: "GPU allocation matches model requirements — no paying for A100s when an L4 will do",
+              detail:
+                "GPU allocation matches model requirements — no paying for A100s when an L4 will do",
             },
             {
               strategy: "Request Batching",
-              detail: "Concurrent requests share GPU compute through continuous batching, maximizing utilization",
+              detail:
+                "Concurrent requests share GPU compute through continuous batching, maximizing utilization",
             },
             {
               strategy: "Idle Shutdown",
-              detail: "Unused model instances are unloaded after configurable idle periods to free GPU memory",
+              detail:
+                "Unused model instances are unloaded after configurable idle periods to free GPU memory",
             },
           ].map((item) => (
             <div
               key={item.strategy}
-              className="rounded border border-border-subtle bg-[#0a0e17] p-4"
+              className="rounded-lg border border-border bg-surfaceAlt p-4"
             >
-              <h4 className="mb-1 font-mono text-sm font-semibold text-accent">
+              <h4 className="mb-1 font-mono text-sm font-semibold text-textPrimary">
                 {item.strategy}
               </h4>
-              <p className="text-sm text-text-muted">{item.detail}</p>
+              <p className="text-sm text-textMuted">{item.detail}</p>
             </div>
           ))}
         </div>
       </ArchSection>
 
       {/* Future Roadmap */}
-      <Section className="border-t border-border-subtle">
+      <Section className="border-t border-border">
         <SectionHeader
           label="Roadmap"
           title="Future Architecture"
           description="Planned architectural enhancements that will expand capability and efficiency."
         />
-        <div className="grid gap-6 md:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-3">
           {[
             {
               icon: Zap,
@@ -415,13 +445,20 @@ export default function ArchitecturePage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="rounded border border-border-subtle bg-surface p-6"
+              whileHover={{
+                y: -3,
+                boxShadow: "0 8px 24px var(--card-hover-shadow)",
+                transition: { duration: 0.2 },
+              }}
+              className="rounded-lg border border-border bg-surface p-6 transition-colors hover:border-[var(--card-hover-border)]"
             >
-              <item.icon className="mb-4 h-5 w-5 text-accent-secondary" />
-              <h3 className="mb-2 text-base font-semibold text-text-primary">
+              <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-md bg-surfaceAlt">
+                <item.icon className="h-5 w-5 text-textSecondary" />
+              </div>
+              <h3 className="mb-2 text-base font-semibold text-textPrimary">
                 {item.title}
               </h3>
-              <p className="text-sm leading-relaxed text-text-muted">
+              <p className="text-sm leading-relaxed text-textMuted">
                 {item.description}
               </p>
             </motion.div>

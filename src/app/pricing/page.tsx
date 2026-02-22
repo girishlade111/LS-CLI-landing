@@ -66,13 +66,13 @@ export default function PricingPage() {
       />
 
       <Section>
-        <div className="mb-10 rounded border border-accent/20 bg-accent/5 p-4 text-center">
-          <p className="text-sm font-medium text-accent">
+        <div className="mb-10 rounded-lg border border-border bg-surfaceAlt p-4 text-center">
+          <p className="text-sm font-medium text-textSecondary">
             Pricing to be announced. All plans will be available at launch.
           </p>
         </div>
 
-        <div className="grid gap-6 lg:grid-cols-3">
+        <div className="grid gap-5 lg:grid-cols-3">
           {tiers.map((tier, i) => (
             <motion.div
               key={tier.name}
@@ -80,27 +80,32 @@ export default function PricingPage() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.1 }}
-              className={`flex flex-col rounded border p-6 ${
+              whileHover={{
+                y: -3,
+                boxShadow: "0 8px 24px var(--card-hover-shadow)",
+                transition: { duration: 0.2 },
+              }}
+              className={`flex flex-col rounded-lg border p-6 transition-colors hover:border-[var(--card-hover-border)] ${
                 tier.highlighted
-                  ? "border-accent/30 bg-accent/5"
-                  : "border-border-subtle bg-surface"
+                  ? "border-textPrimary/20 bg-surface"
+                  : "border-border bg-surface"
               }`}
             >
               <div className="mb-6">
-                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded bg-accent/10">
-                  <tier.icon className="h-5 w-5 text-accent" />
+                <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-md bg-surfaceAlt">
+                  <tier.icon className="h-5 w-5 text-textSecondary" />
                 </div>
-                <h3 className="text-xl font-bold text-text-primary">
+                <h3 className="text-xl font-bold text-textPrimary">
                   {tier.name}
                 </h3>
-                <p className="mt-1 text-sm text-text-muted">
+                <p className="mt-1 text-sm text-textMuted">
                   {tier.description}
                 </p>
               </div>
 
-              <div className="mb-6 border-t border-border-subtle pt-6">
-                <span className="text-2xl font-bold text-text-muted">—</span>
-                <p className="mt-1 text-xs text-text-muted">
+              <div className="mb-6 border-t border-border pt-6">
+                <span className="text-2xl font-bold text-textMuted">—</span>
+                <p className="mt-1 text-xs text-textMuted">
                   Pricing to be announced
                 </p>
               </div>
@@ -108,18 +113,18 @@ export default function PricingPage() {
               <ul className="mb-8 flex-1 space-y-3">
                 {tier.features.map((feature) => (
                   <li key={feature} className="flex items-start gap-2.5">
-                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-success" />
-                    <span className="text-sm text-text-muted">{feature}</span>
+                    <Check className="mt-0.5 h-4 w-4 shrink-0 text-textSecondary" />
+                    <span className="text-sm text-textMuted">{feature}</span>
                   </li>
                 ))}
               </ul>
 
               <button
                 disabled
-                className={`w-full rounded py-2.5 text-sm font-semibold ${
+                className={`w-full rounded-md py-2.5 text-sm font-semibold transition-colors ${
                   tier.highlighted
-                    ? "border border-accent/30 bg-accent/10 text-accent opacity-80"
-                    : "border border-border-subtle bg-background text-text-muted opacity-70"
+                    ? "bg-textPrimary text-background opacity-80"
+                    : "border border-border bg-background text-textMuted opacity-70"
                 }`}
               >
                 {tier.status}
@@ -129,22 +134,22 @@ export default function PricingPage() {
         </div>
       </Section>
 
-      <Section className="border-t border-border-subtle">
-        <div className="rounded border border-border-subtle bg-surface p-10 text-center md:p-14">
+      <Section className="border-t border-border">
+        <div className="rounded-lg border border-border bg-surface p-10 text-center md:p-14">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-2xl font-bold text-text-primary">
+            <h2 className="text-2xl font-bold text-textPrimary">
               Need Custom Infrastructure?
             </h2>
-            <p className="mx-auto mt-3 max-w-lg text-text-muted">
+            <p className="mx-auto mt-3 max-w-lg text-textMuted">
               For organizations with specific deployment requirements, compliance
               needs, or large-scale GPU infrastructure, reach out to discuss a
               custom plan.
             </p>
-            <span className="mt-6 inline-flex items-center rounded border border-accent/30 bg-accent/10 px-6 py-3 text-sm font-semibold text-accent">
+            <span className="mt-6 inline-flex items-center rounded-md bg-textPrimary px-6 py-3 text-sm font-semibold text-background">
               Launching Soon
             </span>
           </motion.div>
