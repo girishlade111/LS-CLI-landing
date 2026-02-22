@@ -22,6 +22,7 @@ import {
 import { TerminalAnimation } from "@/components/terminal-animation";
 import { ArchitectureDiagram } from "@/components/architecture-diagram";
 import { Section, SectionHeader } from "@/components/section";
+import { HeroWaveBackground } from "@/components/ui/hero-wave-background";
 
 const whyReasons = [
   {
@@ -127,19 +128,27 @@ export default function HomePage() {
   return (
     <>
       {/* Hero Section */}
-      <section className="relative overflow-hidden border-b border-border pt-16">
-        {/* Background grid */}
+      <section className="relative overflow-hidden border-b border-border bg-background pt-16">
+        {/* Layer 0: Animated wave canvas */}
+        <HeroWaveBackground />
+
+        {/* Layer 1: Background grid */}
         <div
-          className="absolute inset-0 opacity-[0.03] dark:opacity-[0.02]"
+          className="absolute inset-0 z-[1] opacity-[0.03] dark:opacity-[0.02]"
           style={{
             backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M0 0h1v60H0zM60 0h1v60h-1zM0 0h60v1H0zM0 60h60v1H0z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
           }}
         />
-        {/* Gradient blobs */}
-        <div className="absolute top-20 left-1/4 h-96 w-96 rounded-full bg-[var(--highlight-bg)] blur-[120px]" />
-        <div className="absolute bottom-0 right-1/4 h-72 w-72 rounded-full bg-[var(--highlight-bg)] blur-[100px]" />
 
-        <div className="relative mx-auto max-w-7xl px-6 py-24 md:py-32">
+        {/* Layer 2: Gradient blobs */}
+        <div className="absolute top-20 left-1/4 z-[1] h-96 w-96 rounded-full bg-[var(--highlight-bg)] blur-[120px]" />
+        <div className="absolute bottom-0 right-1/4 z-[1] h-72 w-72 rounded-full bg-[var(--highlight-bg)] blur-[100px]" />
+
+        {/* Layer 3: Readability overlay */}
+        <div className="absolute inset-0 z-[2] bg-gradient-to-b from-background/80 via-background/60 to-background dark:from-background/70 dark:via-background/50 dark:to-background" />
+
+        {/* Layer 4: Content */}
+        <div className="relative z-10 mx-auto max-w-7xl px-6 py-24 md:py-32">
           <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             {/* Left: Content */}
             <motion.div
