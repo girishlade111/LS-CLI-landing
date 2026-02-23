@@ -92,7 +92,7 @@ export default function AboutPage() {
         </div>
       </Section>
 
-      <Section id="principles" className="border-t border-border bg-surfaceAlt/50">
+      <Section id="principles" className="border-t border-border bg-[var(--surface-alt-half)]">
         <SectionHeader
           label="Principles"
           title="What We Stand For"

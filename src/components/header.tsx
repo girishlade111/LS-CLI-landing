@@ -23,7 +23,7 @@ export function Header() {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-surface/85 backdrop-blur-xl">
+    <header className="fixed top-0 left-0 right-0 z-50 border-b border-border backdrop-blur-xl" style={{ backgroundColor: "var(--nav-bg)" }}>
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group">

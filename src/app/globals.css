@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* ── Tailwind v4: Use .dark class for dark: variant (not media query) ── */
+@custom-variant dark (&:where(.dark, .dark *));
+
 @font-face {
   font-family: "JetBrains Mono";
   font-style: normal;
@@ -13,9 +16,11 @@
  * Theme System — Semantic Token Architecture
  *
  * 1. Raw RGB values live in :root / .dark as space-separated triples.
- * 2. @theme inline maps Tailwind utility names → rgb(var(--token) / <alpha>).
+ * 2. @theme inline maps Tailwind utility names → rgb(var(--token)).
  * 3. Components use ONLY the Tailwind utilities (bg-background, text-textPrimary, …).
  * 4. Dark mode swaps :root values via the .dark class on <html>.
+ * 5. Alpha variants use pre-computed CSS variables (--nav-bg, --overlay-*, etc.)
+ *    because Tailwind v4 cannot decompose rgb(var()) for /alpha modifiers.
  */
 
 /* ── Light theme tokens ── */
@@ -33,6 +38,13 @@
   --accent-secondary: 22 163 74;
 
   --shadow-color: 0 0 0;
+
+  /* Pre-computed alpha variants for components that need transparency */
+  --nav-bg: rgba(255, 255, 255, 0.85);
+  --overlay-from: rgba(249, 250, 251, 0.80);
+  --overlay-via: rgba(249, 250, 251, 0.60);
+  --surface-alt-half: rgba(243, 244, 246, 0.50);
+  --border-accent: rgba(17, 24, 39, 0.20);
 
   /* Non-utility custom properties */
   --shadow-base: rgba(0, 0, 0, 0.06);
@@ -65,6 +77,13 @@
   --accent-secondary: 156 163 175;
 
   --shadow-color: 0 0 0;
+
+  /* Pre-computed alpha variants — dark */
+  --nav-bg: rgba(17, 17, 17, 0.85);
+  --overlay-from: rgba(11, 11, 12, 0.70);
+  --overlay-via: rgba(11, 11, 12, 0.50);
+  --surface-alt-half: rgba(26, 26, 26, 0.50);
+  --border-accent: rgba(245, 245, 245, 0.20);
 
   --shadow-base: rgba(0, 0, 0, 0.4);
   --shadow-lg: rgba(0, 0, 0, 0.6);

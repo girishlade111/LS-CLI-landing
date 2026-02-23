@@ -87,7 +87,7 @@ export default function PricingPage() {
               }}
               className={`flex flex-col rounded-lg border p-6 transition-colors hover:border-[var(--card-hover-border)] ${
                 tier.highlighted
-                  ? "border-textPrimary/20 bg-surface"
+                  ? "border-[var(--border-accent)] bg-surface"
                   : "border-border bg-surface"
               }`}
             >

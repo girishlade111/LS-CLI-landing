@@ -145,7 +145,12 @@ export default function HomePage() {
         <div className="absolute bottom-0 right-1/4 z-[1] h-72 w-72 rounded-full bg-[var(--highlight-bg)] blur-[100px]" />
 
         {/* Layer 3: Readability overlay */}
-        <div className="absolute inset-0 z-[2] bg-gradient-to-b from-background/80 via-background/60 to-background dark:from-background/70 dark:via-background/50 dark:to-background" />
+        <div
+          className="absolute inset-0 z-[2]"
+          style={{
+            background: "linear-gradient(to bottom, var(--overlay-from), var(--overlay-via), rgb(var(--background)))",
+          }}
+        />
 
         {/* Layer 4: Content */}
         <div className="relative z-10 mx-auto max-w-7xl px-6 py-24 md:py-32">
@@ -235,7 +240,7 @@ export default function HomePage() {
       </Section>
 
       {/* How It Works */}
-      <Section className="border-t border-border bg-surfaceAlt/50">
+      <Section className="border-t border-border bg-[var(--surface-alt-half)]">
         <SectionHeader
           label="Architecture"
           title="How It Works"
@@ -343,7 +348,7 @@ export default function HomePage() {
       {/* Infrastructure Layer */}
       <Section
         id="infrastructure"
-        className="border-t border-border bg-surfaceAlt/50"
+        className="border-t border-border bg-[var(--surface-alt-half)]"
       >
         <SectionHeader
           label="Infrastructure"
