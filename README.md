@@ -113,3 +113,13 @@ This project is licensed under the MIT License.
 ---
 
 Built with ❤️ using Next.js
+
+## Deploy
+
+This site is a fully static Next.js export (`output: "export"`). Build with `npm run build` — the static files land in `out/`. Live at the homepage URL below.
+
+---
+
+## Built by Girish Lade
+
+LS CLI Landing is built and maintained by [Girish Lade](https://github.com/girishlade111) — a solo builder crafting free, practical software. Explore more projects at [ladestack.in](https://ladestack.in).
